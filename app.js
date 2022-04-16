@@ -1,6 +1,7 @@
 const path = require('path');
 
 const express = require('express');
+
 require('dotenv').config()
 const bodyParser = require('body-parser');
 
@@ -8,6 +9,7 @@ const errorController = require('./controllers/error');
 
 const sequelize=require('./util/database')
 const app = express();
+// app.use(express.static(__dirname + 'public/ecommerce_frontend'))
 const Product=require('./models/product')
 const User=require('./models/user')
 const Cart=require('./models/cart')
@@ -41,6 +43,10 @@ app.use((req,res,next)=>{
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use((req,res)=>{
+    const urrl= req.url
+    res.sendFile(path.join(__dirname,`public/${urrl}`))
+})
 
 app.use(errorController.get404);
 
