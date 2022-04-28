@@ -13,10 +13,10 @@ function getOrders(){
     axios.get(`${url}:3000/orders`).then(data=>{
         console.log(data.data)
         const orders=data.data
-        var totalprice=0;
+        
 
         for(let i=0;i<orders.length;i++){
-          
+         let totalprice=0;
           
             const orderitesm=` <div class="orders-cart">
             <div class="order-header">
@@ -41,7 +41,7 @@ function getOrders(){
                       <h4>$${product.price}</h4>
 
                       ${
-                        totalprice=totalprice+product.price
+                        totalprice=totalprice+product.price*product.orderItem.quantity
 
                       }
                       <h4>qty:${product.orderItem.quantity}</h4>
@@ -58,14 +58,15 @@ function getOrders(){
                         
                     
             )
+           
 
                 }
             
              
-        
+                <h4 class='totalPrice'> total:${totalprice}</h4>
              
             </div>
-            <h4 class='totalPrice'> total:${totalprice}</h4>
+            
         
           </div>`
           oders_container.innerHTML=  oders_container.innerHTML+orderitesm
